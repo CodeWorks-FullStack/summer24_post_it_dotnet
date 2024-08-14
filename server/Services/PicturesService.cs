@@ -2,14 +2,21 @@
 
 
 
+
 namespace post_it_dotnet.Services;
 
 public class PicturesService
 {
-  private readonly PicturesRepository repository;
+  private readonly PicturesRepository _repository;
 
   public PicturesService(PicturesRepository repository)
   {
-    this.repository = repository;
+    _repository = repository;
+  }
+
+  internal Picture CreatePicture(Picture pictureData)
+  {
+    Picture picture = _repository.CreatePicture(pictureData);
+    return picture;
   }
 }
