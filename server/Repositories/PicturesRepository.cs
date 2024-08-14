@@ -4,6 +4,8 @@
 
 
 
+
+
 namespace post_it_dotnet.Repositories;
 
 public class PicturesRepository
@@ -30,6 +32,32 @@ public class PicturesRepository
     WHERE pictures.id = LAST_INSERT_ID();";
 
     Picture picture = _db.Query<Picture, Profile, Picture>(sql, JoinCreator, pictureData).FirstOrDefault();
+    return picture;
+  }
+
+  internal void DestroyPicture(int pictureId)
+  {
+    string sql = "DELETE FROM pictures WHERE id = @pictureId LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, new { pictureId });
+
+    // GOOFY CODE BELOW, COPY AND PASTE AT YOUR OWN PERIL
+    switch (rowsAffected)
+    {
+      case 0:
+        throw new Exception("DELETE FAILED");
+      case 1:
+        return;
+      default:
+        throw new Exception("MORE THAN ONE PICTURE WAS DELETED, AND THAT IS BAD");
+    }
+  }
+
+  internal Picture GetPictureById(int pictureId)
+  {
+    string sql = "SELECT * FROM pictures WHERE id = @pictureId;";
+
+    Picture picture = _db.Query<Picture>(sql, new { pictureId }).FirstOrDefault();
     return picture;
   }
 
