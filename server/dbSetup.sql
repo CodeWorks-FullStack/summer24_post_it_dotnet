@@ -16,7 +16,7 @@ CREATE TABLE
     title VARCHAR(255) NOT NULL,
     description VARCHAR(255),
     coverImg VARCHAR(3000) NOT NULL,
-    archived BOOLEAN DEFAULT FALSE NOT NULL,
+    archived BOOLEAN DEFAULT false NOT NULL,
     category ENUM ('aesthetics', 'food', 'games', 'animals', 'misc') NOT NULL DEFAULT 'misc',
     creatorId VARCHAR(255) NOT NULL,
     FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
