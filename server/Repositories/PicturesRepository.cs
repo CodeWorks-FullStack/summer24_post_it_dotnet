@@ -29,11 +29,7 @@ public class PicturesRepository
     JOIN accounts ON accounts.id = pictures.creatorId
     WHERE pictures.id = LAST_INSERT_ID();";
 
-    Picture picture = _db.Query<Picture, Profile, Picture>(sql, (picture, profile) =>
-    {
-      picture.Creator = profile;
-      return picture;
-    }, pictureData).FirstOrDefault();
+    Picture picture = _db.Query<Picture, Profile, Picture>(sql, JoinCreator, pictureData).FirstOrDefault();
     return picture;
   }
 
@@ -47,13 +43,14 @@ public class PicturesRepository
     JOIN accounts ON accounts.id = pictures.creatorId
     WHERE pictures.albumId = @albumId;";
 
-    List<Picture> pictures = _db.Query<Picture, Profile, Picture>(sql, (picture, profile) =>
-    {
-      picture.Creator = profile;
-      return picture;
-    },
-     new { albumId }).ToList();
+    List<Picture> pictures = _db.Query<Picture, Profile, Picture>(sql, JoinCreator, new { albumId }).ToList();
 
     return pictures;
+  }
+
+  private Picture JoinCreator(Picture picture, Profile profile)
+  {
+    picture.Creator = profile;
+    return picture;
   }
 }
