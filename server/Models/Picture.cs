@@ -1,10 +1,11 @@
 namespace post_it_dotnet.Models;
 
-public class Picture
+public class Picture : RepoItem<int>
 {
-  public int Id { get; set; }
-  public DateTime CreatedAt { get; set; }
-  public DateTime UpdatedAt { get; set; }
+  // NOTE these properties are inherited from RepoItem
+  // public int Id { get; set; }
+  // public DateTime CreatedAt { get; set; }
+  // public DateTime UpdatedAt { get; set; }
   public string ImgUrl { get; set; }
   public string CreatorId { get; set; }
   public int AlbumId { get; set; }

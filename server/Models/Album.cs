@@ -2,11 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace post_it_dotnet.Models;
 
-public class Album
+public class Album : RepoItem<int>
 {
-  public int Id { get; set; }
-  public DateTime CreatedAt { get; set; }
-  public DateTime UpdatedAt { get; set; }
 
   [MinLength(3), MaxLength(25)]
   public string Title { get; set; }
