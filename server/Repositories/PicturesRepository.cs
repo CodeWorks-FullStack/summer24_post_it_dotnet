@@ -3,6 +3,7 @@
 
 
 
+
 namespace post_it_dotnet.Repositories;
 
 public class PicturesRepository
@@ -34,5 +35,18 @@ public class PicturesRepository
       return picture;
     }, pictureData).FirstOrDefault();
     return picture;
+  }
+
+  internal List<Picture> GetPicturesByAlbumId(int albumId)
+  {
+    string sql = @"
+    SELECT
+    *
+    FROM pictures
+    WHERE albumId = @albumId;";
+
+    List<Picture> pictures = _db.Query<Picture>(sql, new { albumId }).ToList();
+
+    return pictures;
   }
 }
