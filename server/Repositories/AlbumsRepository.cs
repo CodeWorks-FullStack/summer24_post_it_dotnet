@@ -1,6 +1,7 @@
 
 
 
+
 namespace post_it_dotnet.Repositories;
 
 public class AlbumsRepository
@@ -10,6 +11,19 @@ public class AlbumsRepository
   public AlbumsRepository(IDbConnection db)
   {
     _db = db;
+  }
+
+  internal void ArchiveAlbum(Album albumToArchive)
+  {
+    string sql = @"
+    UPDATE albums
+    SET archived = @Archived
+    WHERE id = @Id LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, albumToArchive);
+
+    if (rowsAffected == 0) throw new Exception("ARCHIVE FAILED");
+    if (rowsAffected > 1) throw new Exception("ARCHIVED MORE THAN ONE ALBUM, UH OH");
   }
 
   internal Album CreateAlbum(Album albumData)
