@@ -17,9 +17,18 @@ public class AlbumsRepository
     albums(creatorId, title, description, coverImg, category)
     VALUES(@CreatorId, @Title, @Description, @CoverImg, @CatEgory);
     
-    SELECT * FROM albums WHERE id = LAST_INSERT_ID();";
+    SELECT 
+    albums.*,
+    accounts.*
+    FROM albums 
+    JOIN accounts ON accounts.id = albums.creatorId
+    WHERE albums.id = LAST_INSERT_ID();";
 
-    Album album = _db.Query<Album>(sql, albumData).FirstOrDefault();
+    Album album = _db.Query<Album, Profile, Album>(sql, (album, profile) =>
+    {
+      album.Creator = profile;
+      return album;
+    }, albumData).FirstOrDefault();
     return album;
   }
 }
