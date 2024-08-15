@@ -3,6 +3,7 @@
 
 
 
+
 namespace post_it_dotnet.Repositories;
 
 public class AlbumMembersRepository
@@ -26,5 +27,15 @@ public class AlbumMembersRepository
     AlbumMember albumMember = _db.Query<AlbumMember>(sql, albumMemberData).FirstOrDefault();
 
     return albumMember;
+  }
+
+  internal List<AlbumMember> GetAlbumMembersByAlbumId(int albumId)
+  {
+    string sql = @"
+    SELECT * 
+    FROM albumMembers WHERE albumId = @albumId;";
+
+    List<AlbumMember> albumMembers = _db.Query<AlbumMember>(sql, new { albumId }).ToList();
+    return albumMembers;
   }
 }
