@@ -21,9 +21,9 @@ public class AlbumMembersService
     return albumMember;
   }
 
-  internal List<Profile> GetAlbumMembersByAlbumId(int albumId)
+  internal List<AlbumMemberProfile> GetAlbumMembersByAlbumId(int albumId)
   {
-    List<Profile> albumMembers = _repository.GetAlbumMembersByAlbumId(albumId);
+    List<AlbumMemberProfile> albumMembers = _repository.GetAlbumMembersByAlbumId(albumId);
     return albumMembers;
   }
 }

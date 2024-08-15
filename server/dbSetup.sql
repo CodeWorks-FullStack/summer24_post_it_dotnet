@@ -56,6 +56,7 @@ FROM
   JOIN accounts ON accounts.id = albums.creatorId;
 
 SELECT
+  `albumMembers`.*,
   accounts.*
 FROM
   albumMembers

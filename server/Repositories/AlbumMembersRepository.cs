@@ -29,7 +29,7 @@ public class AlbumMembersRepository
     return albumMember;
   }
 
-  internal List<Profile> GetAlbumMembersByAlbumId(int albumId)
+  internal List<AlbumMemberProfile> GetAlbumMembersByAlbumId(int albumId)
   {
     string sql = @"
     SELECT 
@@ -39,8 +39,10 @@ public class AlbumMembersRepository
     JOIN accounts ON accounts.id = albumMembers.accountId
     WHERE albumId = @albumId;";
 
-    List<Profile> albumMembers = _db.Query<AlbumMember, Profile, Profile>(sql, (albumMember, profile) =>
+    List<AlbumMemberProfile> albumMembers = _db.Query<AlbumMember, AlbumMemberProfile, AlbumMemberProfile>(sql, (albumMember, profile) =>
     {
+      profile.AlbumMemberId = albumMember.Id; // attaches the Id of the many-to-many to our DTO
+      profile.AlbumId = albumMember.AlbumId;
       return profile;
     }, new { albumId }).ToList();
     return albumMembers;
