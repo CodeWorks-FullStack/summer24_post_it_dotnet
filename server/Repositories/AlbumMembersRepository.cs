@@ -18,16 +18,26 @@ public class AlbumMembersRepository
     _db = db;
   }
 
-  internal AlbumMember CreateAlbumMember(AlbumMember albumMemberData)
+  internal AlbumMemberProfile CreateAlbumMember(AlbumMember albumMemberData)
   {
     string sql = @"
     INSERT INTO
     albumMembers(albumId, accountId)
     VALUES(@AlbumId, @AccountId);
     
-    SELECT * FROM albumMembers WHERE id = LAST_INSERT_ID();";
+    SELECT 
+    albumMembers.*,
+    accounts.*
+    FROM albumMembers
+    JOIN accounts ON accounts.id = albumMembers.accountId
+    WHERE albumMembers.id = LAST_INSERT_ID();";
 
-    AlbumMember albumMember = _db.Query<AlbumMember>(sql, albumMemberData).FirstOrDefault();
+    AlbumMemberProfile albumMember = _db.Query<AlbumMember, AlbumMemberProfile, AlbumMemberProfile>(sql, (albumMember, profile) =>
+    {
+      profile.AlbumId = albumMember.AlbumId;
+      profile.AlbumMemberId = albumMember.Id;
+      return profile;
+    }, albumMemberData).FirstOrDefault();
 
     return albumMember;
   }

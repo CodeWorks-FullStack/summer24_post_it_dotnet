@@ -18,9 +18,9 @@ public class AlbumMembersService
     _repository = repository;
   }
 
-  internal AlbumMember CreateAlbumMember(AlbumMember albumMemberData)
+  internal AlbumMemberProfile CreateAlbumMember(AlbumMember albumMemberData)
   {
-    AlbumMember albumMember = _repository.CreateAlbumMember(albumMemberData);
+    AlbumMemberProfile albumMember = _repository.CreateAlbumMember(albumMemberData);
     return albumMember;
   }
 

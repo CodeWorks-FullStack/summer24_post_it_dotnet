@@ -16,13 +16,13 @@ public class AlbumMembersController : ControllerBase
 
   [HttpPost]
   [Authorize]
-  public async Task<ActionResult<AlbumMember>> CreateAlbumMember([FromBody] AlbumMember albumMemberData)
+  public async Task<ActionResult<AlbumMemberProfile>> CreateAlbumMember([FromBody] AlbumMember albumMemberData)
   {
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
       albumMemberData.AccountId = userInfo.Id;
-      AlbumMember albumMember = _albumMembersService.CreateAlbumMember(albumMemberData);
+      AlbumMemberProfile albumMember = _albumMembersService.CreateAlbumMember(albumMemberData);
       return Ok(albumMember);
     }
     catch (Exception exception)
