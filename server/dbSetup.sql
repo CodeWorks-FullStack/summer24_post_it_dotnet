@@ -71,9 +71,11 @@ FROM
 
 SELECT
   albumMembers.*,
-  albums.*
+  albums.*,
+  accounts.*
 FROM
   albumMembers
   JOIN albums ON albumMembers.albumId = albums.id
+  JOIN accounts ON accounts.id = albums.creatorId
 WHERE
   albumMembers.accountId = '66bb7bd91baeacf46d3e7517';

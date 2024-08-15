@@ -35,15 +35,19 @@ public class AlbumMembersRepository
     string sql = @"
     SELECT
     albumMembers.*,
-    albums.*
+    albums.*,
+    accounts.*
     FROM albumMembers
     JOIN albums ON albumMembers.albumId = albums.id
+    JOIN accounts ON accounts.id = albums.creatorId
     WHERE albumMembers.accountId = @userId;";
 
-    List<AlbumMemberAlbum> albumMemberAlbums = _db.Query<AlbumMember, AlbumMemberAlbum, AlbumMemberAlbum>(sql, (albumMember, album) =>
+    List<AlbumMemberAlbum> albumMemberAlbums = _db.Query<AlbumMember, AlbumMemberAlbum, Profile, AlbumMemberAlbum>(sql,
+    (albumMember, album, profile) =>
     {
       album.AccountId = albumMember.AccountId;
       album.AlbumMemberId = albumMember.Id;
+      album.Creator = profile;
       return album;
     }, new { userId }).ToList();
 
