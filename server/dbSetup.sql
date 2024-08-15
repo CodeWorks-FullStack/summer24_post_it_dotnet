@@ -34,6 +34,18 @@ CREATE TABLE
     FOREIGN KEY (albumId) REFERENCES albums (id) ON DELETE CASCADE
   );
 
+CREATE TABLE
+  albumMembers (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    albumId INT NOT NULL,
+    accountId VARCHAR(255),
+    FOREIGN KEY (albumId) REFERENCES albums (id) ON DELETE CASCADE,
+    FOREIGN KEY (accountId) REFERENCES accounts (id) ON DELETE CASCADE,
+    UNIQUE (albumId, accountId) -- I can only collaborate on each album once
+  );
+
 DROP TABLE albums;
 
 SELECT
@@ -41,6 +53,4 @@ SELECT
   accounts.*
 FROM
   albums
-  JOIN accounts ON accounts.id = albums.creatorId
-WHERE
-  albums.id = 1;
+  JOIN accounts ON accounts.id = albums.creatorId;
