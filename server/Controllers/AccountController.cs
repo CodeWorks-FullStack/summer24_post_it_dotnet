@@ -1,6 +1,6 @@
 namespace post_it_dotnet.Controllers;
 
-[Authorize]
+[Authorize] // All routes in controller require authorization
 [ApiController]
 [Route("[controller]")]
 public class AccountController : ControllerBase
@@ -27,4 +27,10 @@ public class AccountController : ControllerBase
       return BadRequest(e.Message);
     }
   }
+
+  // [HttpGet("collaborators")] // no slash before route
+  // public async Task<ActionResult<List<Album>>> GetAlbumMemberAlbumsByAlbumId()
+  // {
+
+  // }
 }

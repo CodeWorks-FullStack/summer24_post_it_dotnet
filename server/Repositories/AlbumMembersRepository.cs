@@ -29,7 +29,7 @@ public class AlbumMembersRepository
     return albumMember;
   }
 
-  internal List<AlbumMemberProfile> GetAlbumMembersByAlbumId(int albumId)
+  internal List<AlbumMemberProfile> GetAlbumMemberProfilesByAlbumId(int albumId)
   {
     string sql = @"
     SELECT 
