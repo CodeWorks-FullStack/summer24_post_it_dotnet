@@ -30,4 +30,20 @@ public class AlbumMembersController : ControllerBase
       return BadRequest(exception.Message);
     }
   }
+
+  [HttpDelete("{albumMemberId}")]
+  [Authorize]
+  public async Task<ActionResult<string>> DestroyAlbumMember(int albumMemberId)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      string message = _albumMembersService.DestroyAlbumMember(albumMemberId, userInfo.Id);
+      return Ok(message);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
 }

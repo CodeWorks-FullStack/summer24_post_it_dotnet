@@ -5,6 +5,8 @@
 
 
 
+
+
 namespace post_it_dotnet.Repositories;
 
 public class AlbumMembersRepository
@@ -30,6 +32,23 @@ public class AlbumMembersRepository
     return albumMember;
   }
 
+  internal void DestroyAlbumMember(int albumMemberId)
+  {
+    string sql = "DELETE FROM albumMembers WHERE id = @albumMemberId LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, new { albumMemberId });
+
+    switch (rowsAffected)
+    {
+      case 0:
+        throw new Exception("FAILED TO DELETE");
+      case 1:
+        break;
+      default:
+        throw new Exception("DELETED TOO MANY ALBUM MEMBERS, CHECK YOUR SQL MANUAL FOR HOW TO RECTIFY THIS BAD THING THAT HAPPENED");
+    }
+  }
+
   internal List<AlbumMemberAlbum> GetAlbumMemberAlbumsByAccountId(string userId)
   {
     string sql = @"
@@ -52,6 +71,14 @@ public class AlbumMembersRepository
     }, new { userId }).ToList();
 
     return albumMemberAlbums;
+  }
+
+  internal AlbumMember GetAlbumMemberById(int albumMemberId)
+  {
+    string sql = "SELECT * FROM albumMembers WHERE id = @albumMemberId;";
+
+    AlbumMember albumMember = _db.Query<AlbumMember>(sql, new { albumMemberId }).FirstOrDefault();
+    return albumMember;
   }
 
   internal List<AlbumMemberProfile> GetAlbumMemberProfilesByAlbumId(int albumId)
