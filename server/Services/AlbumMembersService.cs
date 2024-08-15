@@ -30,7 +30,7 @@ public class AlbumMembersService
 
   internal List<AlbumMemberProfile> GetAlbumMemberProfilesByAlbumId(int albumId)
   {
-    List<AlbumMemberProfile> albumMembers = _repository.GetAlbumMemberProfilesByAlbumId(albumId);
-    return albumMembers;
+    List<AlbumMemberProfile> albumMembersProfiles = _repository.GetAlbumMemberProfilesByAlbumId(albumId);
+    return albumMembersProfiles;
   }
 }

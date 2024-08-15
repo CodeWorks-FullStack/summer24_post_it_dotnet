@@ -98,8 +98,8 @@ public class AlbumsController : ControllerBase
   {
     try
     {
-      List<AlbumMemberProfile> albumMembers = _albumMembersService.GetAlbumMemberProfilesByAlbumId(albumId);
-      return Ok(albumMembers);
+      List<AlbumMemberProfile> albumMembersProfiles = _albumMembersService.GetAlbumMemberProfilesByAlbumId(albumId);
+      return Ok(albumMembersProfiles);
     }
     catch (Exception exception)
     {
