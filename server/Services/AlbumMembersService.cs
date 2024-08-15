@@ -2,6 +2,7 @@
 
 
 
+
 namespace post_it_dotnet.Services;
 
 public class AlbumMembersService
@@ -11,5 +12,11 @@ public class AlbumMembersService
   public AlbumMembersService(AlbumMembersRepository repository)
   {
     _repository = repository;
+  }
+
+  internal AlbumMember CreateAlbumMember(AlbumMember albumMemberData)
+  {
+    AlbumMember albumMember = _repository.CreateAlbumMember(albumMemberData);
+    return albumMember;
   }
 }
