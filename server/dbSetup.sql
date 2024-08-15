@@ -54,3 +54,11 @@ SELECT
 FROM
   albums
   JOIN accounts ON accounts.id = albums.creatorId;
+
+SELECT
+  accounts.*
+FROM
+  albumMembers
+  JOIN accounts ON accounts.id = albumMembers.accountId
+WHERE
+  albumId = 28;

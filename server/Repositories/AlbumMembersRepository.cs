@@ -29,13 +29,20 @@ public class AlbumMembersRepository
     return albumMember;
   }
 
-  internal List<AlbumMember> GetAlbumMembersByAlbumId(int albumId)
+  internal List<Profile> GetAlbumMembersByAlbumId(int albumId)
   {
     string sql = @"
-    SELECT * 
-    FROM albumMembers WHERE albumId = @albumId;";
+    SELECT 
+    albumMembers.*,
+    accounts.* 
+    FROM albumMembers
+    JOIN accounts ON accounts.id = albumMembers.accountId
+    WHERE albumId = @albumId;";
 
-    List<AlbumMember> albumMembers = _db.Query<AlbumMember>(sql, new { albumId }).ToList();
+    List<Profile> albumMembers = _db.Query<AlbumMember, Profile, Profile>(sql, (albumMember, profile) =>
+    {
+      return profile;
+    }, new { albumId }).ToList();
     return albumMembers;
   }
 }
