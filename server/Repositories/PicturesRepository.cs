@@ -47,7 +47,7 @@ public class PicturesRepository
       case 0:
         throw new Exception("DELETE FAILED");
       case 1:
-        return;
+        break;
       default:
         throw new Exception("MORE THAN ONE PICTURE WAS DELETED, AND THAT IS BAD");
     }
