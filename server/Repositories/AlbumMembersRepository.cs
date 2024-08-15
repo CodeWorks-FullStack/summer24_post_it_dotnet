@@ -4,6 +4,7 @@
 
 
 
+
 namespace post_it_dotnet.Repositories;
 
 public class AlbumMembersRepository
@@ -27,6 +28,24 @@ public class AlbumMembersRepository
     AlbumMember albumMember = _db.Query<AlbumMember>(sql, albumMemberData).FirstOrDefault();
 
     return albumMember;
+  }
+
+  internal List<Album> GetAlbumMemberAlbumsByAccountId(string userId)
+  {
+    string sql = @"
+    SELECT
+    albumMembers.*,
+    albums.*
+    FROM albumMembers
+    JOIN albums ON albumMembers.albumId = albums.id
+    WHERE albumMembers.accountId = @userId;";
+
+    List<Album> albumMemberAlbums = _db.Query<AlbumMember, Album, Album>(sql, (albumMember, album) =>
+    {
+      return album;
+    }, new { userId }).ToList();
+
+    return albumMemberAlbums;
   }
 
   internal List<AlbumMemberProfile> GetAlbumMemberProfilesByAlbumId(int albumId)

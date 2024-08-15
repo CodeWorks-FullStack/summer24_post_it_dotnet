@@ -63,3 +63,17 @@ FROM
   JOIN accounts ON accounts.id = albumMembers.accountId
 WHERE
   albumId = 28;
+
+SELECT
+  *
+FROM
+  accounts;
+
+SELECT
+  albumMembers.*,
+  albums.*
+FROM
+  albumMembers
+  JOIN albums ON albumMembers.albumId = albums.id
+WHERE
+  albumMembers.accountId = '66bb7bd91baeacf46d3e7517';
