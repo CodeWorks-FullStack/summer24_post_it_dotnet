@@ -22,9 +22,9 @@ public class AlbumMembersService
     return albumMember;
   }
 
-  internal List<Album> GetAlbumMemberAlbumsByAccountId(string userId)
+  internal List<AlbumMemberAlbum> GetAlbumMemberAlbumsByAccountId(string userId)
   {
-    List<Album> albumMemberAlbums = _repository.GetAlbumMemberAlbumsByAccountId(userId);
+    List<AlbumMemberAlbum> albumMemberAlbums = _repository.GetAlbumMemberAlbumsByAccountId(userId);
     return albumMemberAlbums;
   }
 

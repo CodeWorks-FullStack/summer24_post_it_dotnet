@@ -30,7 +30,7 @@ public class AlbumMembersRepository
     return albumMember;
   }
 
-  internal List<Album> GetAlbumMemberAlbumsByAccountId(string userId)
+  internal List<AlbumMemberAlbum> GetAlbumMemberAlbumsByAccountId(string userId)
   {
     string sql = @"
     SELECT
@@ -40,8 +40,10 @@ public class AlbumMembersRepository
     JOIN albums ON albumMembers.albumId = albums.id
     WHERE albumMembers.accountId = @userId;";
 
-    List<Album> albumMemberAlbums = _db.Query<AlbumMember, Album, Album>(sql, (albumMember, album) =>
+    List<AlbumMemberAlbum> albumMemberAlbums = _db.Query<AlbumMember, AlbumMemberAlbum, AlbumMemberAlbum>(sql, (albumMember, album) =>
     {
+      album.AccountId = albumMember.AccountId;
+      album.AlbumMemberId = albumMember.Id;
       return album;
     }, new { userId }).ToList();
 

@@ -31,12 +31,12 @@ public class AccountController : ControllerBase
   }
 
   [HttpGet("collaborators")] // no slash before route
-  public async Task<ActionResult<List<Album>>> GetAlbumMemberAlbumsByAccountId()
+  public async Task<ActionResult<List<AlbumMemberAlbum>>> GetAlbumMemberAlbumsByAccountId()
   {
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-      List<Album> albumMemberAlbums = _albumMembersService.GetAlbumMemberAlbumsByAccountId(userInfo.Id);
+      List<AlbumMemberAlbum> albumMemberAlbums = _albumMembersService.GetAlbumMemberAlbumsByAccountId(userInfo.Id);
       return Ok(albumMemberAlbums);
     }
     catch (Exception exception)

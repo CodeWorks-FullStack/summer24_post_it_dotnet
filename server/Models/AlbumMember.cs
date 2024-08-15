@@ -12,3 +12,10 @@ public class AlbumMemberProfile : Profile
   public int AlbumMemberId { get; set; }
   public int AlbumId { get; set; }
 }
+
+
+public class AlbumMemberAlbum : Album
+{
+  public int AlbumMemberId { get; set; }
+  public string AccountId { get; set; }
+}
